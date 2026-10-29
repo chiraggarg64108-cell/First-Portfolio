@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chirag Garg — CS &amp; AI/ML Student &amp; Developer</title>
+  <meta name="description" content="Chirag Garg — Constantly Learning. Always Building. CS & AI/ML student at Newton School of Technology." />
+  <style>
+    /* ==========================================================================
+       RESET & BASE DESIGN SYSTEM (MATCHING AMRITANSHU PORTFOLIO)
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #050505;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      --border-line: rgba(255, 255, 255, 0.15);
+      --lime: #bef264;
+      --lime-glow: rgba(190, 242, 100, 0.5);
+      --lime-muted: rgba(190, 242, 100, 0.7);
+      --lime-bg: rgba(190, 242, 100, 0.12);
+      --text-white: #ffffff;
+      --text-zinc-100: #f4f4f5;
+      --text-zinc-200: #e4e4e7;
+      --text-zinc-300: #d4d4d8;
+      --text-zinc-400: #a1a1aa;
+      --text-zinc-500: #71717a;
+      --text-zinc-600: #52525b;
+      --text-zinc-700: #3f3f46;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+      color: var(--text-zinc-100);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-zinc-100);
+      line-height: 1.5;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient noise overlay matching reference */
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Selection highlight */
+    ::selection {
+      background-color: var(--lime);
+      color: #000000;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ==========================================================================
+       NAVIGATION (EXACT MIX-BLEND & FIXED UPPERCASE MONO)
+       ========================================================================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      mix-blend-mode: difference;
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        padding: 1.25rem 2.5rem;
+      }
+    }
+
+    .nav-brand {
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      transition: opacity 0.2s;
+    }
+
+    .nav-brand:hover {
+      opacity: 0.6;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        gap: 2rem;
+      }
+    }
+
+    .nav-links a {
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.6;
+    }
+
+    /* ==========================================================================
+       HERO SECTION (#top)
+       ========================================================================== */
+    .hero-section {
+      position: relative;
+      display: flex;
+      min-height: 100svh;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      padding: 0 1rem 1.5rem 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-section {
+        padding: 0 2.5rem 2rem 2.5rem;
+      }
+    }
+
+    .hero-gradient-overlay {
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 35%;
+      background: linear-gradient(to bottom, #050505, transparent);
+    }
+
+    .hero-meta-grid {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      gap: 1.5rem;
+      border-top: 1px solid var(--border-line);
+      padding-top: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-zinc-400);
+    }
+
+    @media (min-width: 768px) {
+      .hero-meta-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .hero-meta-desc {
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--text-zinc-300);
+      font-size: 0.875rem;
+    }
+
+    .hero-status {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-status {
+        justify-self: end;
+      }
+    }
+
+    .pulse-container {
+      position: relative;
+      display: flex;
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+
+    .pulse-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background-color: var(--lime);
+      opacity: 0.75;
+      animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .pulse-dot {
+      position: relative;
+      display: inline-flex;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 9999px;
+      background-color: var(--lime);
+    }
+
+    @keyframes ping {
+      75%, 100% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 10;
+      margin-top: 1rem;
+      white-space: nowrap;
+      font-size: 16.4vw;
+      font-weight: 800;
+      line-height: 0.8;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    /* ==========================================================================
+       CONTAINER & SECTION LABELS
+       ========================================================================== */
+    .section-container {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 72rem; /* max-w-6xl */
+      padding: 7rem 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .section-container {
+        padding: 10rem 2.5rem;
+      }
+    }
+
+    .section-num {
+      margin-bottom: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--lime-muted);
+    }
+
+    /* ==========================================================================
+       SECTION 01: ABOUT
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr 280px;
+      }
+    }
+
+    .about-statement {
+      font-size: clamp(1.75rem, 3.8vw, 2.75rem);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.035em;
+      color: var(--text-zinc-100);
+    }
+
+    .about-statement .highlight {
+      color: var(--text-white);
+    }
+
+    .about-tilt-card {
+      aspect-ratio: 4 / 5;
+      display: grid;
+      place-items: center;
+      border-radius: 1rem;
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(135deg, rgba(190, 242, 100, 0.15) 0%, #18181b 45%, #09090b 100%);
+      font-size: 5rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--lime);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+      user-select: none;
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .about-tilt-card:hover {
+      transform: translateY(-4px) rotate(1deg);
+      border-color: var(--lime-glow);
+    }
+
+    /* ==========================================================================
+       TECH STACK MARQUEE (PURE CSS)
+       ========================================================================== */
+    .marquee-wrapper {
+      overflow: hidden;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 2rem 0;
+      position: relative;
+      background: #050505;
+    }
+
+    .marquee-content {
+      display: flex;
+      width: max-content;
+      gap: 3rem;
+      font-size: clamp(2rem, 4.5vw, 3.75rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-zinc-600);
+      animation: marquee 26s linear infinite;
+      user-select: none;
+    }
+
+    .marquee-content:hover {
+      animation-play-state: paused;
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2.5rem;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .marquee-item:hover {
+      color: var(--text-white);
+    }
+
+    .marquee-star {
+      color: var(--lime);
+      font-size: 0.7em;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 02: SELECTED WORK
+       ========================================================================== */
+    .section-title-huge {
+      margin-bottom: 4rem;
+      font-size: clamp(2.75rem, 6.5vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+    }
+
+    .projects-grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      border: 1px solid var(--border-subtle);
+      background-color: var(--card-bg);
+      transition: border-color 0.4s ease, transform 0.4s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--lime-glow);
+    }
+
+    /* Styled graphic mockup container (replaces placeholder images) */
+    .project-preview {
+      display: block;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background-color: #121215;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      padding: 1.5rem;
+      text-decoration: none;
+    }
+
+    .preview-mockup {
+      width: 100%;
+      height: 100%;
+      border-radius: 0.5rem;
+      background: #09090b;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-card:hover .preview-mockup {
+      transform: scale(1.03);
+    }
+
+    .mockup-header {
+      background: #18181b;
+      padding: 0.5rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .mockup-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #3f3f46;
+    }
+
+    .mockup-dot.red { background: #ef4444; }
+    .mockup-dot.yellow { background: #eab308; }
+    .mockup-dot.green { background: #22c55e; }
+
+    .mockup-body {
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-zinc-400);
+      line-height: 1.6;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .mockup-body .keyword { color: #f43f5e; }
+    .mockup-body .fn { color: var(--lime); }
+    .mockup-body .str { color: #38bdf8; }
+    .mockup-body .comment { color: var(--text-zinc-600); }
+
+    .project-info {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .project-header-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .project-card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      transition: color 0.2s ease;
+    }
+
+    .project-card:hover .project-card-title {
+      color: var(--lime);
+    }
+
+    .project-card-title span {
+      margin-right: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-zinc-500);
+      font-weight: normal;
+    }
+
+    .project-card-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-zinc-400);
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+
+    .project-card-link:hover {
+      color: var(--text-white);
+    }
+
+    .project-card-desc {
+      margin-top: 0.5rem;
+      color: var(--text-zinc-400);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .project-tags {
+      margin-top: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      list-style: none;
+    }
+
+    .project-tag {
+      border-radius: 9999px;
+      border: 1px solid var(--border-subtle);
+      padding: 0.25rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-zinc-300);
+    }
+
+    /* ==========================================================================
+       SECTION 03: JOURNEY (TIMELINE)
+       ========================================================================== */
+    .timeline-wrap {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .timeline-wrap {
+        padding-left: 3rem;
+      }
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--lime), rgba(190, 242, 100, 0.4) 70%, transparent);
+    }
+
+    .timeline-item {
+      margin-bottom: 3.5rem;
+      position: relative;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-zinc-500);
+    }
+
+    .timeline-title {
+      margin-top: 0.5rem;
+      font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+
+    .timeline-title .sub {
+      color: var(--text-zinc-500);
+      font-weight: 400;
+    }
+
+    .timeline-desc {
+      margin-top: 0.75rem;
+      max-width: 38rem;
+      color: var(--text-zinc-400);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       STATS STRIP (3 COLUMNS)
+       ========================================================================== */
+    .stats-section {
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: #050505;
+    }
+
+    .stats-grid {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 72rem;
+      display: grid;
+    }
+
+    @media (min-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .stat-box {
+      padding: 3.5rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    @media (min-width: 768px) {
+      .stat-box {
+        padding: 3.5rem 2.5rem;
+        border-bottom: none;
+        border-right: 1px solid var(--border-subtle);
+      }
+      .stat-box:last-child {
+        border-right: none;
+      }
+    }
+
+    .stat-number {
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.06em;
+      line-height: 1;
+    }
+
+    .stat-number .lime-plus {
+      color: var(--lime);
+    }
+
+    .stat-label {
+      margin-top: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-zinc-500);
+    }
+
+    /* ==========================================================================
+       SECTION 04: CONTACT
+       ========================================================================== */
+    .contact-section {
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 1rem;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .contact-section {
+        padding: 12rem 2.5rem;
+      }
+    }
+
+    .contact-glow {
+      position: absolute;
+      inset: 0;
+      z-index: -10;
+      background: radial-gradient(circle at center, rgba(190, 242, 100, 0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .contact-heading {
+      font-size: clamp(3.25rem, 8.5vw, 7.5rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-pill-btn {
+      display: inline-block;
+      border-radius: 9999px;
+      background-color: #ffffff;
+      padding: 1rem 2.25rem;
+      font-weight: 600;
+      color: #000000;
+      font-size: 1rem;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .contact-pill-btn:hover {
+      transform: scale(1.05);
+      background-color: var(--lime);
+    }
+
+    .contact-sub-mail {
+      margin-top: 1rem;
+    }
+
+    .contact-sub-mail a {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-zinc-500);
+      transition: color 0.2s ease;
+    }
+
+    .contact-sub-mail a:hover {
+      color: var(--text-white);
+    }
+
+    .contact-social-row {
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-zinc-400);
+    }
+
+    .contact-social-row a {
+      transition: color 0.2s ease;
+    }
+
+    .contact-social-row a:hover {
+      color: var(--text-white);
+    }
+
+    /* ==========================================================================
+       FOOTER (WITH BOTTOM GIANT STROKE NAME)
+       ========================================================================== */
+    .site-footer {
+      overflow: hidden;
+      padding: 2rem 1rem 0 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .site-footer {
+        padding: 2rem 2.5rem 0 2.5rem;
+      }
+    }
+
+    .footer-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-zinc-600);
+    }
+
+    .footer-meta-row a:hover {
+      color: var(--text-white);
+    }
+
+    .footer-giant-name {
+      margin-top: 1.5rem;
+      white-space: nowrap;
+      font-size: 16.4vw;
+      font-weight: 800;
+      line-height: 0.75;
+      letter-spacing: -0.06em;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--text-zinc-700);
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Grain overlay matching reference -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- FIXED NAVIGATION -->
+  <nav class="nav" aria-label="Main Navigation">
+    <a href="#top" class="nav-brand">Chirag Garg</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#journey">Journey</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO SECTION (#top) -->
+    <section class="hero-section" id="top">
+      <div class="hero-gradient-overlay" aria-hidden="true"></div>
+
+      <!-- 3-Column Meta Strip -->
+      <div class="hero-meta-grid">
+        <p>CS &amp; AI/ML Student @ Newton School of Tech</p>
+        <p class="hero-meta-desc">Constantly Learning. Always Building.</p>
+        <p class="hero-status">
+          <span class="pulse-container">
+            <span class="pulse-ring"></span>
+            <span class="pulse-dot"></span>
+          </span>
+          <span>Available for work</span>
+        </p>
+      </div>
+
+      <!-- Giant Hero Name -->
+      <h1 class="hero-title">CHIRAG GARG</h1>
+    </section>
+
+    <!-- SECTION 01: ABOUT -->
+    <section class="section-container" id="about">
+      <p class="section-num">01 / About</p>
+      <div class="about-grid">
+        <p class="about-statement">
+          I am an <span class="highlight">18-year-old CS &amp; AI/ML student</span> at Newton School of Technology. I focus on hands-on learning, rapid UI prototyping, and building practical software. I also balance my academic hustle with a <span class="highlight">strict gym and strength-training routine</span>.
+        </p>
+        <div class="about-tilt-card" title="Chirag Garg Monogram">
+          CG
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH STACK MARQUEE TICKER -->
+    <section class="marquee-wrapper" aria-label="Tech Stack">
+      <div class="marquee-content">
+        <!-- Sequence 1 -->
+        <span class="marquee-item">Python <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">HTML / CSS <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">C / C++ <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">JavaScript <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">SQL <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">Git <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">Rapid Prototyping <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">AI / ML <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">Strength Training <span class="marquee-star">✦</span></span>
+
+        <!-- Duplicated Sequence for Infinite Loop -->
+        <span class="marquee-item">Python <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">HTML / CSS <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">C / C++ <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">JavaScript <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">SQL <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">Git <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">Rapid Prototyping <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">AI / ML <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">Strength Training <span class="marquee-star">✦</span></span>
+      </div>
+    </section>
+
+    <!-- SECTION 02: SELECTED WORK -->
+    <section class="section-container" id="work">
+      <p class="section-num">02 / Selected work</p>
+      <h2 class="section-title-huge">Things I've built</h2>
+
+      <div class="projects-grid">
+        <!-- Project 01 -->
+        <article class="project-card">
+          <a class="project-preview" href="#contact">
+            <div class="preview-mockup">
+              <div class="mockup-header">
+                <span class="mockup-dot red"></span>
+                <span class="mockup-dot yellow"></span>
+                <span class="mockup-dot green"></span>
+              </div>
+              <div class="mockup-body">
+                <p><span class="comment">// Habit &amp; Streak Engine</span></p>
+                <p><span class="keyword">const</span> streak = <span class="fn">trackHabit</span>({</p>
+                <p>&nbsp;&nbsp;task: <span class="str">"Daily Strength Routine"</span>,</p>
+                <p>&nbsp;&nbsp;frequency: <span class="str">"100% Consistent"</span>,</p>
+                <p>&nbsp;&nbsp;active: <span class="keyword">true</span></p>
+                <p>});</p>
+              </div>
+            </div>
+          </a>
+          <div class="project-info">
+            <div class="project-header-row">
+              <h3 class="project-card-title">
+                <span>01</span>Custom Habit &amp; Task Tracker
+              </h3>
+              <a href="#contact" class="project-card-link">Live ↗</a>
+            </div>
+            <p class="project-card-desc">
+              A high-focus productivity application engineered for tracking daily habits, maintaining activity streaks, and optimizing personal execution workflows.
+            </p>
+            <ul class="project-tags">
+              <li class="project-tag">JavaScript</li>
+              <li class="project-tag">HTML/CSS</li>
+              <li class="project-tag">UI Prototyping</li>
+              <li class="project-tag">Productivity</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Project 02 -->
+        <article class="project-card">
+          <a class="project-preview" href="#contact">
+            <div class="preview-mockup">
+              <div class="mockup-header">
+                <span class="mockup-dot red"></span>
+                <span class="mockup-dot yellow"></span>
+                <span class="mockup-dot green"></span>
+              </div>
+              <div class="mockup-body">
+                <p><span class="comment"># WorldQuant BRAIN Alpha Model</span></p>
+                <p><span class="keyword">def</span> <span class="fn">generate_alpha</span>(data):</p>
+                <p>&nbsp;&nbsp;factor = <span class="fn">ts_rank</span>(data.returns, 20)</p>
+                <p>&nbsp;&nbsp;<span class="keyword">return</span> <span class="fn">group_neutralize</span>(factor)</p>
+              </div>
+            </div>
+          </a>
+          <div class="project-info">
+            <div class="project-header-row">
+              <h3 class="project-card-title">
+                <span>02</span>Quantitative Trading Alphas
+              </h3>
+              <a href="#contact" class="project-card-link">WorldQuant ↗</a>
+            </div>
+            <p class="project-card-desc">
+              Mathematical modeling and statistical factor research on the WorldQuant BRAIN platform, generating predictive alpha signals and algorithmic market datasets.
+            </p>
+            <ul class="project-tags">
+              <li class="project-tag">Python</li>
+              <li class="project-tag">WorldQuant BRAIN</li>
+              <li class="project-tag">Alpha Research</li>
+              <li class="project-tag">Quant Finance</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Project 03 -->
+        <article class="project-card">
+          <a class="project-preview" href="#contact">
+            <div class="preview-mockup">
+              <div class="mockup-header">
+                <span class="mockup-dot red"></span>
+                <span class="mockup-dot yellow"></span>
+                <span class="mockup-dot green"></span>
+              </div>
+              <div class="mockup-body">
+                <p><span class="comment"># Hacktoberfest Pull Request</span></p>
+                <p><span class="keyword">$</span> git checkout -b feat/core-fix</p>
+                <p><span class="keyword">$</span> git commit -m <span class="str">"fix: optimize data pipeline"</span></p>
+                <p><span class="keyword">$</span> git push origin <span class="fn">main</span> [MERGED]</p>
+              </div>
+            </div>
+          </a>
+          <div class="project-info">
+            <div class="project-header-row">
+              <h3 class="project-card-title">
+                <span>03</span>Open Source Contributions
+              </h3>
+              <a href="#contact" class="project-card-link">GitHub ↗</a>
+            </div>
+            <p class="project-card-desc">
+              Active open-source community contributions during Hacktoberfest, resolving issues, improving developer tooling, and collaborating via Git workflows.
+            </p>
+            <ul class="project-tags">
+              <li class="project-tag">Git</li>
+              <li class="project-tag">Open Source</li>
+              <li class="project-tag">Hacktoberfest</li>
+              <li class="project-tag">Collaboration</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 03: JOURNEY (TIMELINE) -->
+    <section class="section-container" id="journey" style="padding-top: 2rem;">
+      <p class="section-num">03 / Journey</p>
+
+      <div class="timeline-wrap">
+        <div class="timeline-line" aria-hidden="true"></div>
+
+        <!-- 2025 - Now -->
+        <div class="timeline-item">
+          <p class="timeline-date">2025 — Present</p>
+          <h3 class="timeline-title">
+            CS &amp; AI/ML Student <span class="sub">@ Newton School of Technology</span>
+          </h3>
+          <p class="timeline-desc">
+            Deepening foundations in artificial intelligence, machine learning, systems architecture, rapid UI prototyping, and building production-grade software applications.
+          </p>
+        </div>
+
+        <!-- 2024 - 2025 -->
+        <div class="timeline-item">
+          <p class="timeline-date">2024 — 2025</p>
+          <h3 class="timeline-title">
+            Quantitative Alpha Modeler <span class="sub">@ WorldQuant BRAIN</span>
+          </h3>
+          <p class="timeline-desc">
+            Formulated and backtested mathematical alphas, researching financial market mechanics, statistical factor regression, and quantitative signals.
+          </p>
+        </div>
+
+        <!-- 2024 -->
+        <div class="timeline-item">
+          <p class="timeline-date">2024</p>
+          <h3 class="timeline-title">
+            Open Source Contributor <span class="sub">@ Hacktoberfest</span>
+          </h3>
+          <p class="timeline-desc">
+            Collaborated across global developer repositories, shipping enhancements, refining documentation, and navigating production Git workflows.
+          </p>
+        </div>
+
+        <!-- Ongoing -->
+        <div class="timeline-item">
+          <p class="timeline-date">Continuous Discipline</p>
+          <h3 class="timeline-title">
+            Strength Training Athlete <span class="sub">@ The Gym</span>
+          </h3>
+          <p class="timeline-desc">
+            Maintaining a strict, relentless strength-training routine that translates iron discipline, resilience, and laser focus directly into software engineering.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS STRIP -->
+    <section class="stats-section" aria-label="Key Highlights">
+      <div class="stats-grid">
+        <div class="stat-box">
+          <p class="stat-number">18</p>
+          <p class="stat-label">Years of Age</p>
+        </div>
+        <div class="stat-box">
+          <p class="stat-number">6<span class="lime-plus">+</span></p>
+          <p class="stat-label">Core Tech Stacks</p>
+        </div>
+        <div class="stat-box">
+          <p class="stat-number">100<span class="lime-plus">%</span></p>
+          <p class="stat-label">Discipline &amp; Consistency</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 04: CONTACT -->
+    <section class="contact-section" id="contact">
+      <div class="contact-glow" aria-hidden="true"></div>
+      <p class="section-num">04 / Contact</p>
+      <h2 class="contact-heading">
+        Let's build<br />something.
+      </h2>
+      <a class="contact-pill-btn" href="mailto:chiraggarg@example.com">
+        chiraggarg@example.com
+      </a>
+      <p class="contact-sub-mail">
+        <a href="mailto:chirag.garg@nst.rishihood.edu.in">chirag.garg@nst.rishihood.edu.in</a>
+      </p>
+      <div class="contact-social-row">
+        <a href="https://github.com" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+        <a href="https://x.com" target="_blank" rel="noreferrer">X (Twitter) ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-meta-row">
+      <span>&copy; Chirag Garg</span>
+      <a href="#top">Back to top &uarr;</a>
+    </div>
+    <!-- Massive Bottom Outlined Name -->
+    <p class="footer-giant-name" aria-hidden="true">CHIRAG GARG</p>
+  </footer>
+
+</body>
+</html>
