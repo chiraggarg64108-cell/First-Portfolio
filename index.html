@@ -7,348 +7,231 @@
   <meta name="description" content="Chirag Garg — Constantly Learning. Always Building. CS & AI/ML student at Newton School of Technology." />
   <style>
     /* ==========================================================================
-       INTRO / SPLASH SCREEN — CSS KEYFRAME ANIMATION SYSTEM
-       Total intro duration: ~4.8s then auto-dismissed
-       Phase 1 (0–2.8s): terminal boot lines appear one by one on dark bg
-       Phase 2 (2.8–4.2s): lime green panel wipes up revealing name
-       Phase 3 (4.2–4.8s): full splash fades out
+       6-SECOND CINEMATIC VIDEO & SOUND INTRO (NATIVE HTML5 & CSS)
+       Plays for 6 seconds, then automatically fades out and completely disappears.
        ========================================================================== */
-
-    /* Lock scroll during intro */
     body.intro-active {
       overflow: hidden;
     }
 
-    /* ── WRAPPER (sits above everything while active) ── */
-    #splash {
+    #cinematic-intro {
       position: fixed;
       inset: 0;
-      z-index: 9999;
-      background: #050505;
+      z-index: 99999;
+      background-color: #000000;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.8s,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* ── TOP META BAR (mimics reference exactly) ── */
-    #splash-meta {
+    #cinematic-intro.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.02);
+      pointer-events: none;
+    }
+
+    /* Top Metadata Bar */
+    .cinematic-meta-bar {
       position: absolute;
-      top: 1.25rem;
-      left: 1rem;
-      right: 1rem;
+      top: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
       display: flex;
       justify-content: space-between;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.7rem;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      color: #71717a;
+      color: var(--text-zinc-500);
       z-index: 10;
-      animation: splash-meta-in 0.6s 0.2s both;
     }
 
     @media (min-width: 768px) {
-      #splash-meta {
-        left: 2.5rem;
-        right: 2.5rem;
+      .cinematic-meta-bar {
+        top: 2.25rem;
+        left: 3rem;
+        right: 3rem;
       }
     }
 
-    @keyframes splash-meta-in {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .cinematic-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-zinc-400);
     }
 
-    /* ── BINARY RAIN (background columns of 0/1) ── */
-    #splash-rain {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      gap: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0;
-      animation: rain-appear 0.5s 0.3s forwards, rain-fade 0.6s 2.4s forwards;
+    .cinematic-badge .rec-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      animation: recBlink 1s ease-in-out infinite alternate;
     }
 
-    @keyframes rain-appear {
-      to { opacity: 1; }
-    }
-    @keyframes rain-fade {
-      to { opacity: 0; }
+    @keyframes recBlink {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
     }
 
-    .rain-col {
-      width: 1ch;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: clamp(0.6rem, 2.2vw, 0.85rem);
-      line-height: 1.15;
-      word-break: break-all;
-      white-space: pre-wrap;
-      color: #bef264;
-      opacity: 0;
-    }
-
-    /* Stagger each column's fade-in using nth-child selectors */
-    .rain-col:nth-child(1)  { opacity:0.7; animation: col-fade 1.8s 0.30s infinite alternate; }
-    .rain-col:nth-child(2)  { opacity:0.4; animation: col-fade 2.1s 0.15s infinite alternate; color:#e4e4e7; }
-    .rain-col:nth-child(3)  { opacity:0.7; animation: col-fade 1.6s 0.50s infinite alternate; }
-    .rain-col:nth-child(4)  { opacity:0.5; animation: col-fade 2.3s 0.05s infinite alternate; }
-    .rain-col:nth-child(5)  { opacity:0.7; animation: col-fade 1.9s 0.40s infinite alternate; color:#e4e4e7; }
-    .rain-col:nth-child(6)  { opacity:0.3; animation: col-fade 2.0s 0.25s infinite alternate; }
-    .rain-col:nth-child(7)  { opacity:0.6; animation: col-fade 1.7s 0.60s infinite alternate; }
-    .rain-col:nth-child(8)  { opacity:0.4; animation: col-fade 2.2s 0.10s infinite alternate; color:#e4e4e7; }
-    .rain-col:nth-child(9)  { opacity:0.7; animation: col-fade 1.5s 0.45s infinite alternate; }
-    .rain-col:nth-child(10) { opacity:0.5; animation: col-fade 2.0s 0.35s infinite alternate; }
-    .rain-col:nth-child(11) { opacity:0.7; animation: col-fade 1.8s 0.55s infinite alternate; color:#e4e4e7; }
-    .rain-col:nth-child(12) { opacity:0.4; animation: col-fade 2.3s 0.20s infinite alternate; }
-    .rain-col:nth-child(13) { opacity:0.6; animation: col-fade 1.6s 0.65s infinite alternate; }
-    .rain-col:nth-child(14) { opacity:0.5; animation: col-fade 2.1s 0.08s infinite alternate; color:#e4e4e7; }
-    .rain-col:nth-child(15) { opacity:0.7; animation: col-fade 1.9s 0.42s infinite alternate; }
-    .rain-col:nth-child(16) { opacity:0.3; animation: col-fade 2.0s 0.28s infinite alternate; }
-    .rain-col:nth-child(17) { opacity:0.6; animation: col-fade 1.7s 0.58s infinite alternate; color:#e4e4e7; }
-    .rain-col:nth-child(18) { opacity:0.5; animation: col-fade 2.2s 0.12s infinite alternate; }
-    .rain-col:nth-child(19) { opacity:0.7; animation: col-fade 1.5s 0.48s infinite alternate; }
-    .rain-col:nth-child(20) { opacity:0.4; animation: col-fade 2.3s 0.32s infinite alternate; color:#e4e4e7; }
-
-    @keyframes col-fade {
-      from { opacity: 0.1; }
-      to   { opacity: 0.75; }
-    }
-
-    /* ── BOOT TERMINAL (centered, monospace) ── */
-    #splash-boot {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 1.5rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: clamp(0.75rem, 3.2vw, 1.2rem);
-      line-height: 1.9;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    @media (min-width: 768px) {
-      #splash-boot {
-        padding: 0 12vw;
-        font-size: clamp(0.8rem, 1.6vw, 1.05rem);
-      }
-    }
-
-    .boot-line {
-      opacity: 0;
-    }
-
-    /* Each line appears with a fast fade-in at staggered delays */
-    .boot-line:nth-child(1) { animation: bootline-in 0.35s 0.4s  both; }
-    .boot-line:nth-child(2) { animation: bootline-in 0.35s 0.85s both; }
-    .boot-line:nth-child(3) { animation: bootline-in 0.35s 1.15s both; }
-    .boot-line:nth-child(4) { animation: bootline-in 0.35s 1.50s both; }
-    .boot-line:nth-child(5) { animation: bootline-in 0.35s 1.85s both; }
-    .boot-line:nth-child(6) { animation: bootline-in 0.35s 2.20s both; }
-
-    @keyframes bootline-in {
-      from { opacity: 0; transform: translateX(-8px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-
-    .boot-ok   { color: #bef264; }
-    .boot-main { color: #e4e4e7; }
-    .boot-dim  { color: #a1a1aa; }
-
-    /* Blinking cursor at end of last boot line */
-    .boot-cursor {
-      display: inline-block;
-      width: 0.55em;
-      height: 1em;
-      background: #bef264;
-      vertical-align: text-bottom;
-      animation: blink 0.8s step-start infinite;
-      margin-left: 0.2em;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-
-    /* ── CODE EDITOR CARD (appears behind boot lines briefly) ── */
-    #splash-editor {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      padding: 1rem;
-      z-index: 3;
-      pointer-events: none;
-      perspective: 1200px;
-      opacity: 0;
-      /* appears at 1.6s, gone by 2.6s */
-      animation: editor-in 0.5s 1.6s both, editor-out 0.4s 2.6s both;
-    }
-
-    @keyframes editor-in {
-      from { opacity: 0; transform: rotateX(12deg) scale(0.95); }
-      to   { opacity: 1; transform: rotateX(0deg)  scale(1); }
-    }
-    @keyframes editor-out {
-      to   { opacity: 0; }
-    }
-
-    .editor-window {
+    /* Centered Cinematic Video Frame */
+    .cinematic-player-box {
+      position: relative;
       width: 100%;
-      max-width: 48rem;
-      border-radius: 0.75rem;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: #09090b;
-      box-shadow: 0 25px 60px -15px rgba(190,242,100,0.12);
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
       overflow: hidden;
-    }
-
-    .editor-titlebar {
+      background: #050505;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(190, 242, 100, 0.1);
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.6rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: #18181b;
+      justify-content: center;
     }
 
-    .editor-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .editor-dot.r { background: #ff5f57; }
-    .editor-dot.y { background: #febc2e; }
-    .editor-dot.g { background: #28c840; }
-
-    .editor-filename {
-      margin-left: 0.5rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.7rem;
-      color: #71717a;
+    /* Native Video Tag */
+    .cinematic-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: relative;
+      z-index: 2;
+      background: #000000;
     }
 
-    .editor-body {
-      padding: 1.25rem 1.5rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: clamp(0.65rem, 2.6vw, 0.9rem);
-      line-height: 1.8;
-    }
-
-    @media (min-width: 768px) {
-      .editor-body { font-size: clamp(0.75rem, 1.7vw, 0.9rem); }
-    }
-
-    .editor-body p { white-space: pre; }
-    .editor-ln  { color: #3f3f46; margin-right: 1.5rem; user-select: none; }
-    .e-kw  { color: #ff2bd6; }
-    .e-cls { color: #bef264; }
-    .e-str { color: #38bdf8; }
-    .e-fn  { color: #bef264; }
-    .e-op  { color: #71717a; }
-    .e-def { color: #e4e4e7; }
-    .e-amb { color: #fde68a; }
-
-    /* ── LIME PANEL WIPE (Phase 2) ── */
-    #splash-panel {
+    /* Graceful Placeholder Display if user media files are pending in folder */
+    .cinematic-placeholder {
       position: absolute;
       inset: 0;
-      background: #bef264;
-      color: #000000;
-      display: grid;
-      place-items: center;
-      z-index: 20;
-      clip-path: inset(100% 0 0 0);  /* starts hidden from bottom */
-      animation: panel-wipe 0.55s cubic-bezier(0.76, 0, 0.24, 1) 2.8s both;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      background: radial-gradient(circle at center, rgba(190, 242, 100, 0.08) 0%, #050505 75%);
     }
 
-    @keyframes panel-wipe {
-      from { clip-path: inset(100% 0 0 0); }
-      to   { clip-path: inset(0% 0 0 0); }
+    .cinematic-placeholder-logo {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--lime);
+      margin-bottom: 0.75rem;
+      text-shadow: 0 0 25px rgba(190, 242, 100, 0.4);
     }
 
-    #splash-panel-meta {
-      position: absolute;
-      top: 1.25rem;
-      left: 1rem;
-      right: 1rem;
+    .cinematic-placeholder-text {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-zinc-400);
+      margin-bottom: 0.25rem;
+    }
+
+    .cinematic-placeholder-sub {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-zinc-600);
+    }
+
+    /* 6-Second Cinematic Progress Bar */
+    .cinematic-timeline {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .cinematic-progress-track {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .cinematic-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #bef264, #ffffff);
+      border-radius: 9999px;
+      animation: fillProgress 6s linear forwards;
+    }
+
+    @keyframes fillProgress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    .cinematic-controls-row {
       display: flex;
       justify-content: space-between;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.7rem;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: rgba(0,0,0,0.5);
-      opacity: 0;
-      animation: panel-meta-in 0.4s 3.2s both;
+      letter-spacing: 0.12em;
+      color: var(--text-zinc-500);
     }
 
-    @media (min-width: 768px) {
-      #splash-panel-meta {
-        left: 2.5rem;
-        right: 2.5rem;
-      }
-    }
-
-    @keyframes panel-meta-in {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    #splash-name {
-      font-size: clamp(2.5rem, 15vw, 9rem);
-      font-weight: 800;
-      letter-spacing: -0.06em;
-      line-height: 0.85;
-      text-align: center;
-      white-space: nowrap;
-      color: #000000;
-    }
-
-    /* ── FULL SPLASH FADE-OUT (Phase 3) ── */
-    #splash.hide {
-      animation: splash-out 0.55s cubic-bezier(0.76, 0, 0.24, 1) both;
-      pointer-events: none;
-    }
-
-    @keyframes splash-out {
-      from { opacity: 1; }
-      to   { opacity: 0; visibility: hidden; }
-    }
-
-    /* ── SKIP BUTTON ── */
-    #splash-skip {
-      position: absolute;
-      bottom: 1.5rem;
-      right: 1rem;
-      z-index: 50;
+    /* Skip Intro Button */
+    .cinematic-skip-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-zinc-300);
       border-radius: 9999px;
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 0.5rem 1rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 0.45rem 1rem;
+      font-family: var(--font-mono);
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: #d4d4d8;
-      background: transparent;
       cursor: pointer;
-      mix-blend-mode: difference;
-      transition: background 0.2s, color 0.2s;
-      animation: skip-in 0.5s 0.5s both;
+      transition: all 0.2s ease;
     }
 
-    #splash-skip:hover {
+    .cinematic-skip-btn:hover {
       background: #ffffff;
       color: #000000;
+      border-color: #ffffff;
+      transform: translateY(-1px);
     }
 
-    @media (min-width: 768px) {
-      #splash-skip { right: 2.5rem; }
+    .sound-toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--lime);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: opacity 0.2s ease;
     }
 
-    @keyframes skip-in {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    .sound-toggle-btn:hover {
+      opacity: 0.75;
     }
 
     /* ==========================================================================
@@ -1135,81 +1018,56 @@
 <body>
 
   <!-- ═══════════════════════════════════════════════════════════
-       SPLASH / INTRO SCREEN
+       6-SECOND CINEMATIC VIDEO & SOUND INTRO
+       Native HTML5 <video> & <audio> with deep black backdrop
+       Placeholders: src="intro-video.mp4" & src="intro-sound.mp3"
        ═══════════════════════════════════════════════════════════ -->
-  <div id="splash" role="presentation" aria-hidden="true">
-
-    <!-- Top meta bar: name | tagline -->
-    <div id="splash-meta">
-      <span>Chirag Garg — Portfolio</span>
-      <span>Initialising…</span>
+  <div id="cinematic-intro" role="dialog" aria-modal="true" aria-label="Cinematic Intro">
+    <!-- Top Metadata Bar -->
+    <div class="cinematic-meta-bar">
+      <span class="cinematic-badge">
+        <span class="rec-dot"></span>
+        <span>Chirag Garg &mdash; Cinematic Intro</span>
+      </span>
+      <span id="introTimerDisplay">00:06</span>
     </div>
 
-    <!-- Binary rain background -->
-    <div id="splash-rain" aria-hidden="true">
-      <p class="rain-col">0010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100</p>
-      <p class="rain-col">1010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010</p>
-      <p class="rain-col">0101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101</p>
-      <p class="rain-col">1001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010</p>
-      <p class="rain-col">0100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101</p>
-      <p class="rain-col">0010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100</p>
-      <p class="rain-col">1010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010</p>
-      <p class="rain-col">0101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001</p>
-      <p class="rain-col">1010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010</p>
-      <p class="rain-col">0101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101</p>
-      <p class="rain-col">0010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100</p>
-      <p class="rain-col">1001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010</p>
-      <p class="rain-col">0100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101</p>
-      <p class="rain-col">1010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010</p>
-      <p class="rain-col">0101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001</p>
-      <p class="rain-col">0010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100</p>
-      <p class="rain-col">1010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010</p>
-      <p class="rain-col">0101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101</p>
-      <p class="rain-col">1001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010</p>
-      <p class="rain-col">0100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101</p>
+    <!-- Centered Cinematic Player Frame -->
+    <div class="cinematic-player-box">
+      <!-- Graceful Placeholder Visual (visible until intro-video.mp4 is loaded) -->
+      <div class="cinematic-placeholder" aria-hidden="true">
+        <div class="cinematic-placeholder-logo">CG</div>
+        <p class="cinematic-placeholder-text">Constantly Learning. Always Building.</p>
+        <p class="cinematic-placeholder-sub">Place "intro-video.mp4" &amp; "intro-sound.mp3" in the project folder</p>
+      </div>
+
+      <!-- Native HTML5 Video Element (Centered) -->
+      <video id="introVideo" class="cinematic-video" autoplay playsinline muted preload="auto">
+        <source src="intro-video.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video.
+      </video>
+
+      <!-- Native HTML5 Audio Element -->
+      <audio id="introAudio" preload="auto">
+        <source src="intro-sound.mp3" type="audio/mpeg" />
+        Your browser does not support HTML5 audio.
+      </audio>
     </div>
 
-    <!-- Terminal boot sequence (Phase 1) -->
-    <div id="splash-boot">
-      <p class="boot-line"><span class="boot-dim">CHIRAG OS v2026.1 — booting…</span></p>
-      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Mounted /dev/brain</span></p>
-      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Started gym.service — <span class="boot-dim">100% consistent</span></span></p>
-      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Loaded AI/ML modules — <span class="boot-dim">Newton School of Technology</span></span></p>
-      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Initialised rapid-prototype.sh — <span class="boot-dim">HTML/CSS/JS/Python</span></span></p>
-      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Reached target: <strong>Developer</strong><span class="boot-cursor"></span></span></p>
-    </div>
-
-    <!-- Code editor card (Phase 1 overlay) -->
-    <div id="splash-editor" aria-hidden="true">
-      <div class="editor-window">
-        <div class="editor-titlebar">
-          <span class="editor-dot r"></span>
-          <span class="editor-dot y"></span>
-          <span class="editor-dot g"></span>
-          <span class="editor-filename">chirag.py</span>
-        </div>
-        <div class="editor-body">
-          <p><span class="editor-ln">1</span><span class="e-kw">class </span><span class="e-cls">ChiragGarg</span><span class="e-def">(</span><span class="e-cls">Student</span><span class="e-def">):</span></p>
-          <p><span class="editor-ln">2</span><span class="e-def">  major    </span><span class="e-op">= </span><span class="e-str">"CS &amp; AI/ML"</span></p>
-          <p><span class="editor-ln">3</span><span class="e-def">  school   </span><span class="e-op">= </span><span class="e-str">"Newton School of Technology"</span></p>
-          <p><span class="editor-ln">4</span><span class="e-def">  stack    </span><span class="e-op">= </span><span class="e-def">[</span><span class="e-str">"Python"</span><span class="e-def">, </span><span class="e-str">"JS"</span><span class="e-def">, </span><span class="e-str">"C++"</span><span class="e-def">, </span><span class="e-str">"SQL"</span><span class="e-def">, </span><span class="e-str">"Git"</span><span class="e-def">]</span></p>
-          <p><span class="editor-ln">5</span><span class="e-kw">  async def </span><span class="e-fn">build</span><span class="e-def">(</span><span class="e-amb">self</span><span class="e-def">):</span></p>
-          <p><span class="editor-ln">6</span><span class="e-def">    </span><span class="e-kw">return </span><span class="e-str">"Constantly Learning. Always Building."</span></p>
-        </div>
+    <!-- 6-Second Timeline Progress & Controls -->
+    <div class="cinematic-timeline">
+      <div class="cinematic-progress-track">
+        <div class="cinematic-progress-bar"></div>
+      </div>
+      <div class="cinematic-controls-row">
+        <button id="soundToggleBtn" class="sound-toggle-btn" type="button" title="Toggle sound">
+          <span id="soundIcon">&#9834;</span> <span id="soundText">Audio: intro-sound.mp3</span>
+        </button>
+        <button id="skipIntroBtn" class="cinematic-skip-btn" type="button">
+          Skip Intro &rarr;
+        </button>
       </div>
     </div>
-
-    <!-- Lime wipe panel (Phase 2) -->
-    <div id="splash-panel">
-      <div id="splash-panel-meta">
-        <span>CS &amp; AI/ML Student &amp; Developer</span>
-        <span>Hello, World.</span>
-      </div>
-      <p id="splash-name">CHIRAG GARG</p>
-    </div>
-
-    <!-- Skip button -->
-    <button id="splash-skip" type="button">Skip intro →</button>
   </div>
 
   <!-- Grain overlay matching reference -->
@@ -1509,38 +1367,121 @@
   </footer>
 
   <!-- ═══════════════════════════════════════════════════════════
-       SPLASH DISMISS SCRIPT
-       Strictly necessary: CSS cannot remove an element from the DOM
-       or unlock scrolling. This is the minimum JS required.
-       Total intro time = 4.8s  (panel wipe at 2.8s + 2s display)
+       CINEMATIC INTRO CONTROLLER (EXACTLY 6 SECONDS)
+       Handles playback, audio fade, and automatic smooth fade-out
+       after 6000ms using native vanilla JavaScript.
        ═══════════════════════════════════════════════════════════ -->
   <script>
     (function () {
-      var splash = document.getElementById('splash');
-      var skip   = document.getElementById('splash-skip');
-      var body   = document.body;
-      var TOTAL  = 4800; // ms — matches CSS animation timeline
+      var INTRO_DURATION = 6000; // Exactly 6 seconds
+      var intro = document.getElementById('cinematic-intro');
+      var video = document.getElementById('introVideo');
+      var audio = document.getElementById('introAudio');
+      var skipBtn = document.getElementById('skipIntroBtn');
+      var soundBtn = document.getElementById('soundToggleBtn');
+      var soundText = document.getElementById('soundText');
+      var timerDisplay = document.getElementById('introTimerDisplay');
+      var isDismissed = false;
 
-      // Lock scroll while intro plays
-      body.classList.add('intro-active');
+      // Lock scrolling while intro is running
+      document.body.classList.add('intro-active');
 
-      function dismiss() {
-        splash.classList.add('hide');
-        body.classList.remove('intro-active');
-        // Remove from DOM after fade-out transition (0.55s)
-        setTimeout(function () {
-          splash.style.display = 'none';
-        }, 600);
+      // Attempt synchronous native media playback
+      function playMedia() {
+        if (video) {
+          video.currentTime = 0;
+          var videoPromise = video.play();
+          if (videoPromise !== undefined) {
+            videoPromise.catch(function () {
+              // Silently handle if browser restricts autoplay without interaction
+            });
+          }
+        }
+        if (audio) {
+          audio.currentTime = 0;
+          var audioPromise = audio.play();
+          if (audioPromise !== undefined) {
+            audioPromise.catch(function () {
+              if (soundText) soundText.textContent = 'Click to Play Audio ♪';
+            });
+          }
+        }
       }
 
-      // Auto-dismiss after full sequence
-      var timer = setTimeout(dismiss, TOTAL);
+      playMedia();
 
-      // Skip button
-      skip.addEventListener('click', function () {
-        clearTimeout(timer);
-        dismiss();
-      });
+      // Sound toggle interaction
+      if (soundBtn && audio) {
+        soundBtn.addEventListener('click', function () {
+          if (audio.paused) {
+            audio.play().then(function () {
+              if (video) video.muted = false;
+              soundText.textContent = 'Audio Playing ♪';
+            }).catch(function () {});
+          } else {
+            audio.pause();
+            soundText.textContent = 'Audio Muted';
+          }
+        });
+      }
+
+      // Live 6-second countdown
+      var secondsRemaining = 6;
+      var countdownInterval = setInterval(function () {
+        secondsRemaining -= 1;
+        if (secondsRemaining >= 0 && timerDisplay) {
+          timerDisplay.textContent = '00:0' + secondsRemaining;
+        }
+        if (secondsRemaining <= 0) {
+          clearInterval(countdownInterval);
+        }
+      }, 1000);
+
+      // Smooth fade-out and complete disappearance
+      function dismissIntro() {
+        if (isDismissed) return;
+        isDismissed = true;
+        clearInterval(countdownInterval);
+
+        // Initiate CSS fade-out transition
+        if (intro) {
+          intro.classList.add('fade-out');
+        }
+        document.body.classList.remove('intro-active');
+
+        // Graceful audio volume fade-out
+        if (audio && !audio.paused) {
+          var fadeInterval = setInterval(function () {
+            if (audio.volume > 0.1) {
+              audio.volume = Math.max(0, audio.volume - 0.15);
+            } else {
+              audio.pause();
+              clearInterval(fadeInterval);
+            }
+          }, 60);
+        }
+
+        // Fully remove from display after fade transition completes (800ms)
+        setTimeout(function () {
+          if (intro) {
+            intro.style.display = 'none';
+          }
+          if (video) {
+            video.pause();
+          }
+        }, 800);
+      }
+
+      // Exactly 6-second timer to auto-dismiss
+      var autoTimer = setTimeout(dismissIntro, INTRO_DURATION);
+
+      // Skip button listener for instant dismissal
+      if (skipBtn) {
+        skipBtn.addEventListener('click', function () {
+          clearTimeout(autoTimer);
+          dismissIntro();
+        });
+      }
     })();
   </script>
 </body>
