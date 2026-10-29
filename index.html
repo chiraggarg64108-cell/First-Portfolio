@@ -7,6 +7,351 @@
   <meta name="description" content="Chirag Garg — Constantly Learning. Always Building. CS & AI/ML student at Newton School of Technology." />
   <style>
     /* ==========================================================================
+       INTRO / SPLASH SCREEN — CSS KEYFRAME ANIMATION SYSTEM
+       Total intro duration: ~4.8s then auto-dismissed
+       Phase 1 (0–2.8s): terminal boot lines appear one by one on dark bg
+       Phase 2 (2.8–4.2s): lime green panel wipes up revealing name
+       Phase 3 (4.2–4.8s): full splash fades out
+       ========================================================================== */
+
+    /* Lock scroll during intro */
+    body.intro-active {
+      overflow: hidden;
+    }
+
+    /* ── WRAPPER (sits above everything while active) ── */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #050505;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── TOP META BAR (mimics reference exactly) ── */
+    #splash-meta {
+      position: absolute;
+      top: 1.25rem;
+      left: 1rem;
+      right: 1rem;
+      display: flex;
+      justify-content: space-between;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #71717a;
+      z-index: 10;
+      animation: splash-meta-in 0.6s 0.2s both;
+    }
+
+    @media (min-width: 768px) {
+      #splash-meta {
+        left: 2.5rem;
+        right: 2.5rem;
+      }
+    }
+
+    @keyframes splash-meta-in {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── BINARY RAIN (background columns of 0/1) ── */
+    #splash-rain {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      gap: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      animation: rain-appear 0.5s 0.3s forwards, rain-fade 0.6s 2.4s forwards;
+    }
+
+    @keyframes rain-appear {
+      to { opacity: 1; }
+    }
+    @keyframes rain-fade {
+      to { opacity: 0; }
+    }
+
+    .rain-col {
+      width: 1ch;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: clamp(0.6rem, 2.2vw, 0.85rem);
+      line-height: 1.15;
+      word-break: break-all;
+      white-space: pre-wrap;
+      color: #bef264;
+      opacity: 0;
+    }
+
+    /* Stagger each column's fade-in using nth-child selectors */
+    .rain-col:nth-child(1)  { opacity:0.7; animation: col-fade 1.8s 0.30s infinite alternate; }
+    .rain-col:nth-child(2)  { opacity:0.4; animation: col-fade 2.1s 0.15s infinite alternate; color:#e4e4e7; }
+    .rain-col:nth-child(3)  { opacity:0.7; animation: col-fade 1.6s 0.50s infinite alternate; }
+    .rain-col:nth-child(4)  { opacity:0.5; animation: col-fade 2.3s 0.05s infinite alternate; }
+    .rain-col:nth-child(5)  { opacity:0.7; animation: col-fade 1.9s 0.40s infinite alternate; color:#e4e4e7; }
+    .rain-col:nth-child(6)  { opacity:0.3; animation: col-fade 2.0s 0.25s infinite alternate; }
+    .rain-col:nth-child(7)  { opacity:0.6; animation: col-fade 1.7s 0.60s infinite alternate; }
+    .rain-col:nth-child(8)  { opacity:0.4; animation: col-fade 2.2s 0.10s infinite alternate; color:#e4e4e7; }
+    .rain-col:nth-child(9)  { opacity:0.7; animation: col-fade 1.5s 0.45s infinite alternate; }
+    .rain-col:nth-child(10) { opacity:0.5; animation: col-fade 2.0s 0.35s infinite alternate; }
+    .rain-col:nth-child(11) { opacity:0.7; animation: col-fade 1.8s 0.55s infinite alternate; color:#e4e4e7; }
+    .rain-col:nth-child(12) { opacity:0.4; animation: col-fade 2.3s 0.20s infinite alternate; }
+    .rain-col:nth-child(13) { opacity:0.6; animation: col-fade 1.6s 0.65s infinite alternate; }
+    .rain-col:nth-child(14) { opacity:0.5; animation: col-fade 2.1s 0.08s infinite alternate; color:#e4e4e7; }
+    .rain-col:nth-child(15) { opacity:0.7; animation: col-fade 1.9s 0.42s infinite alternate; }
+    .rain-col:nth-child(16) { opacity:0.3; animation: col-fade 2.0s 0.28s infinite alternate; }
+    .rain-col:nth-child(17) { opacity:0.6; animation: col-fade 1.7s 0.58s infinite alternate; color:#e4e4e7; }
+    .rain-col:nth-child(18) { opacity:0.5; animation: col-fade 2.2s 0.12s infinite alternate; }
+    .rain-col:nth-child(19) { opacity:0.7; animation: col-fade 1.5s 0.48s infinite alternate; }
+    .rain-col:nth-child(20) { opacity:0.4; animation: col-fade 2.3s 0.32s infinite alternate; color:#e4e4e7; }
+
+    @keyframes col-fade {
+      from { opacity: 0.1; }
+      to   { opacity: 0.75; }
+    }
+
+    /* ── BOOT TERMINAL (centered, monospace) ── */
+    #splash-boot {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 1.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: clamp(0.75rem, 3.2vw, 1.2rem);
+      line-height: 1.9;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    @media (min-width: 768px) {
+      #splash-boot {
+        padding: 0 12vw;
+        font-size: clamp(0.8rem, 1.6vw, 1.05rem);
+      }
+    }
+
+    .boot-line {
+      opacity: 0;
+    }
+
+    /* Each line appears with a fast fade-in at staggered delays */
+    .boot-line:nth-child(1) { animation: bootline-in 0.35s 0.4s  both; }
+    .boot-line:nth-child(2) { animation: bootline-in 0.35s 0.85s both; }
+    .boot-line:nth-child(3) { animation: bootline-in 0.35s 1.15s both; }
+    .boot-line:nth-child(4) { animation: bootline-in 0.35s 1.50s both; }
+    .boot-line:nth-child(5) { animation: bootline-in 0.35s 1.85s both; }
+    .boot-line:nth-child(6) { animation: bootline-in 0.35s 2.20s both; }
+
+    @keyframes bootline-in {
+      from { opacity: 0; transform: translateX(-8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .boot-ok   { color: #bef264; }
+    .boot-main { color: #e4e4e7; }
+    .boot-dim  { color: #a1a1aa; }
+
+    /* Blinking cursor at end of last boot line */
+    .boot-cursor {
+      display: inline-block;
+      width: 0.55em;
+      height: 1em;
+      background: #bef264;
+      vertical-align: text-bottom;
+      animation: blink 0.8s step-start infinite;
+      margin-left: 0.2em;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* ── CODE EDITOR CARD (appears behind boot lines briefly) ── */
+    #splash-editor {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      z-index: 3;
+      pointer-events: none;
+      perspective: 1200px;
+      opacity: 0;
+      /* appears at 1.6s, gone by 2.6s */
+      animation: editor-in 0.5s 1.6s both, editor-out 0.4s 2.6s both;
+    }
+
+    @keyframes editor-in {
+      from { opacity: 0; transform: rotateX(12deg) scale(0.95); }
+      to   { opacity: 1; transform: rotateX(0deg)  scale(1); }
+    }
+    @keyframes editor-out {
+      to   { opacity: 0; }
+    }
+
+    .editor-window {
+      width: 100%;
+      max-width: 48rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: #09090b;
+      box-shadow: 0 25px 60px -15px rgba(190,242,100,0.12);
+      overflow: hidden;
+    }
+
+    .editor-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: #18181b;
+    }
+
+    .editor-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .editor-dot.r { background: #ff5f57; }
+    .editor-dot.y { background: #febc2e; }
+    .editor-dot.g { background: #28c840; }
+
+    .editor-filename {
+      margin-left: 0.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.7rem;
+      color: #71717a;
+    }
+
+    .editor-body {
+      padding: 1.25rem 1.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: clamp(0.65rem, 2.6vw, 0.9rem);
+      line-height: 1.8;
+    }
+
+    @media (min-width: 768px) {
+      .editor-body { font-size: clamp(0.75rem, 1.7vw, 0.9rem); }
+    }
+
+    .editor-body p { white-space: pre; }
+    .editor-ln  { color: #3f3f46; margin-right: 1.5rem; user-select: none; }
+    .e-kw  { color: #ff2bd6; }
+    .e-cls { color: #bef264; }
+    .e-str { color: #38bdf8; }
+    .e-fn  { color: #bef264; }
+    .e-op  { color: #71717a; }
+    .e-def { color: #e4e4e7; }
+    .e-amb { color: #fde68a; }
+
+    /* ── LIME PANEL WIPE (Phase 2) ── */
+    #splash-panel {
+      position: absolute;
+      inset: 0;
+      background: #bef264;
+      color: #000000;
+      display: grid;
+      place-items: center;
+      z-index: 20;
+      clip-path: inset(100% 0 0 0);  /* starts hidden from bottom */
+      animation: panel-wipe 0.55s cubic-bezier(0.76, 0, 0.24, 1) 2.8s both;
+    }
+
+    @keyframes panel-wipe {
+      from { clip-path: inset(100% 0 0 0); }
+      to   { clip-path: inset(0% 0 0 0); }
+    }
+
+    #splash-panel-meta {
+      position: absolute;
+      top: 1.25rem;
+      left: 1rem;
+      right: 1rem;
+      display: flex;
+      justify-content: space-between;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(0,0,0,0.5);
+      opacity: 0;
+      animation: panel-meta-in 0.4s 3.2s both;
+    }
+
+    @media (min-width: 768px) {
+      #splash-panel-meta {
+        left: 2.5rem;
+        right: 2.5rem;
+      }
+    }
+
+    @keyframes panel-meta-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    #splash-name {
+      font-size: clamp(2.5rem, 15vw, 9rem);
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      line-height: 0.85;
+      text-align: center;
+      white-space: nowrap;
+      color: #000000;
+    }
+
+    /* ── FULL SPLASH FADE-OUT (Phase 3) ── */
+    #splash.hide {
+      animation: splash-out 0.55s cubic-bezier(0.76, 0, 0.24, 1) both;
+      pointer-events: none;
+    }
+
+    @keyframes splash-out {
+      from { opacity: 1; }
+      to   { opacity: 0; visibility: hidden; }
+    }
+
+    /* ── SKIP BUTTON ── */
+    #splash-skip {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1rem;
+      z-index: 50;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #d4d4d8;
+      background: transparent;
+      cursor: pointer;
+      mix-blend-mode: difference;
+      transition: background 0.2s, color 0.2s;
+      animation: skip-in 0.5s 0.5s both;
+    }
+
+    #splash-skip:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    @media (min-width: 768px) {
+      #splash-skip { right: 2.5rem; }
+    }
+
+    @keyframes skip-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ==========================================================================
        RESET & BASE DESIGN SYSTEM (MATCHING AMRITANSHU PORTFOLIO)
        ========================================================================== */
     *, *::before, *::after {
@@ -789,6 +1134,84 @@
 </head>
 <body>
 
+  <!-- ═══════════════════════════════════════════════════════════
+       SPLASH / INTRO SCREEN
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="splash" role="presentation" aria-hidden="true">
+
+    <!-- Top meta bar: name | tagline -->
+    <div id="splash-meta">
+      <span>Chirag Garg — Portfolio</span>
+      <span>Initialising…</span>
+    </div>
+
+    <!-- Binary rain background -->
+    <div id="splash-rain" aria-hidden="true">
+      <p class="rain-col">0010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100</p>
+      <p class="rain-col">1010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010</p>
+      <p class="rain-col">0101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101</p>
+      <p class="rain-col">1001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010</p>
+      <p class="rain-col">0100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101</p>
+      <p class="rain-col">0010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100</p>
+      <p class="rain-col">1010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010</p>
+      <p class="rain-col">0101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001</p>
+      <p class="rain-col">1010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010</p>
+      <p class="rain-col">0101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101</p>
+      <p class="rain-col">0010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100</p>
+      <p class="rain-col">1001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010</p>
+      <p class="rain-col">0100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101</p>
+      <p class="rain-col">1010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010</p>
+      <p class="rain-col">0101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001</p>
+      <p class="rain-col">0010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100</p>
+      <p class="rain-col">1010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010</p>
+      <p class="rain-col">0101001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101</p>
+      <p class="rain-col">1001010100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010</p>
+      <p class="rain-col">0100101010010101001010100101010010101001010100101010010101001010100101010010101001010100101010010101</p>
+    </div>
+
+    <!-- Terminal boot sequence (Phase 1) -->
+    <div id="splash-boot">
+      <p class="boot-line"><span class="boot-dim">CHIRAG OS v2026.1 — booting…</span></p>
+      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Mounted /dev/brain</span></p>
+      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Started gym.service — <span class="boot-dim">100% consistent</span></span></p>
+      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Loaded AI/ML modules — <span class="boot-dim">Newton School of Technology</span></span></p>
+      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Initialised rapid-prototype.sh — <span class="boot-dim">HTML/CSS/JS/Python</span></span></p>
+      <p class="boot-line"><span class="boot-ok">[  OK  ]</span> <span class="boot-main">Reached target: <strong>Developer</strong><span class="boot-cursor"></span></span></p>
+    </div>
+
+    <!-- Code editor card (Phase 1 overlay) -->
+    <div id="splash-editor" aria-hidden="true">
+      <div class="editor-window">
+        <div class="editor-titlebar">
+          <span class="editor-dot r"></span>
+          <span class="editor-dot y"></span>
+          <span class="editor-dot g"></span>
+          <span class="editor-filename">chirag.py</span>
+        </div>
+        <div class="editor-body">
+          <p><span class="editor-ln">1</span><span class="e-kw">class </span><span class="e-cls">ChiragGarg</span><span class="e-def">(</span><span class="e-cls">Student</span><span class="e-def">):</span></p>
+          <p><span class="editor-ln">2</span><span class="e-def">  major    </span><span class="e-op">= </span><span class="e-str">"CS &amp; AI/ML"</span></p>
+          <p><span class="editor-ln">3</span><span class="e-def">  school   </span><span class="e-op">= </span><span class="e-str">"Newton School of Technology"</span></p>
+          <p><span class="editor-ln">4</span><span class="e-def">  stack    </span><span class="e-op">= </span><span class="e-def">[</span><span class="e-str">"Python"</span><span class="e-def">, </span><span class="e-str">"JS"</span><span class="e-def">, </span><span class="e-str">"C++"</span><span class="e-def">, </span><span class="e-str">"SQL"</span><span class="e-def">, </span><span class="e-str">"Git"</span><span class="e-def">]</span></p>
+          <p><span class="editor-ln">5</span><span class="e-kw">  async def </span><span class="e-fn">build</span><span class="e-def">(</span><span class="e-amb">self</span><span class="e-def">):</span></p>
+          <p><span class="editor-ln">6</span><span class="e-def">    </span><span class="e-kw">return </span><span class="e-str">"Constantly Learning. Always Building."</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lime wipe panel (Phase 2) -->
+    <div id="splash-panel">
+      <div id="splash-panel-meta">
+        <span>CS &amp; AI/ML Student &amp; Developer</span>
+        <span>Hello, World.</span>
+      </div>
+      <p id="splash-name">CHIRAG GARG</p>
+    </div>
+
+    <!-- Skip button -->
+    <button id="splash-skip" type="button">Skip intro →</button>
+  </div>
+
   <!-- Grain overlay matching reference -->
   <div class="grain" aria-hidden="true"></div>
 
@@ -1085,5 +1508,40 @@
     <p class="footer-giant-name" aria-hidden="true">CHIRAG GARG</p>
   </footer>
 
+  <!-- ═══════════════════════════════════════════════════════════
+       SPLASH DISMISS SCRIPT
+       Strictly necessary: CSS cannot remove an element from the DOM
+       or unlock scrolling. This is the minimum JS required.
+       Total intro time = 4.8s  (panel wipe at 2.8s + 2s display)
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      var splash = document.getElementById('splash');
+      var skip   = document.getElementById('splash-skip');
+      var body   = document.body;
+      var TOTAL  = 4800; // ms — matches CSS animation timeline
+
+      // Lock scroll while intro plays
+      body.classList.add('intro-active');
+
+      function dismiss() {
+        splash.classList.add('hide');
+        body.classList.remove('intro-active');
+        // Remove from DOM after fade-out transition (0.55s)
+        setTimeout(function () {
+          splash.style.display = 'none';
+        }, 600);
+      }
+
+      // Auto-dismiss after full sequence
+      var timer = setTimeout(dismiss, TOTAL);
+
+      // Skip button
+      skip.addEventListener('click', function () {
+        clearTimeout(timer);
+        dismiss();
+      });
+    })();
+  </script>
 </body>
 </html>
